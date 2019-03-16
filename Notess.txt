@@ -1,0 +1,144 @@
+Instead of Redux , we use Context-api also
+1.we can inject the values/props at any levels
+2.we can inject our data at any level that we want , so it requires sort 
+of two different pieces 
+	1.first we need a provider
+	2.and then we need a consumer
+ both are in new context api 
+
+steps:
+1.we will make a new context
+	ex: const MyContext = React.createContext();
+2.then, we need to create a provider component that's where our data is actually 
+  going to live 
+		//it is like a central store in redux
+	ex:class MyProvider extends component{
+		//put the state you want to live (ex:put all the variable used in overall classes)
+		state={name:"name",age:12}
+		render(){
+			return(
+			<MyContext.provider value="Hi i m from provider">
+				{this.props.children}
+			</MyContext.provider>
+			)
+		}
+		
+	}
+3.wrap the whole data with the MyProvider provider
+		In this children inside the MyProvider tag will access the data directy.
+		ex:<MyProvider>//top level
+				<div className="App">
+					Hi i am praveen
+					<Family />
+				</div>
+			</MyProvider>
+4.next question how to access the data in child of child component
+				for example , Family is a child of App ,Person is a child of Family
+				we have to access the data in Person component
+	
+		To achieve this, we need a consumer ,
+		
+		Note:provider going to be where your data lives and the consumer is going to be where you actually wants 
+			 to access our data ,
+ steps:
+	1.wrap the component in which you want to access the data from provider is surrounded by consumer tag
+			 <MyContext.Consumer>
+    2.inside of that tag not going to pass down via props , it's actually going to use something thats called a renderprop and
+	   render prop usually looks like a little something like this 
+				<MyContext.Consumer render=()>
+		inside of that give it a pass at a function to render or in this case (which is in example) the render prop passed as
+		just a child so the child of the consumer will be a function so put curly brackets to tell react to running some JS and 
+		then inside of that you get your value or your context .
+					ex:<MyContext.Consumer>
+					   {
+						(context)=>(
+						 
+					   )}
+
+					 </MyContext.Consumer>
+			inside this return something we just say here p tag	
+						ex:<MyContext.Consumer>
+					   {
+						(context)=>(
+							<p>I am inside the consumer</p>
+					   )}
+
+					 </MyContext.Consumer>
+					 to get the value of the provider in consumer using,
+					 
+					 ex:<MyContext.Consumer>
+					   {
+						(context)=>( //context->user defined name 
+							<p>I am inside the {context}</p>
+					   )}
+
+					 </MyContext.Consumer>
+					 
+					 it will prints the value in the provider as Hi i m from provider.(see line number 20)
+					   if you want to access the state , pass the value as object like 
+											value={{
+												state:this.state
+											}}
+					after that you will access the state in Person component like
+										{context.state.name}	
+				
+					ex:<MyContext.Consumer>
+						{context => <p>I am inside the {context.state.name}</p>}
+					</MyContext.Consumer>
+					if you want access more than one data use React.fragment,because this function returns one element only
+					
+	To update the state :
+		
+			likely passing down state , we can also pass down our functions are your actions as we call them in redux 
+					with the use of value in the provider, we have to pass down the state and functions(actions).
+					
+why we can use context-api?
+	while we try to pass the state to multiple level of components, it will leads to conflicts
+	  ex:class app{
+		  state:{
+			name:"hi"
+		  }
+		<family name={this.state.name}/>
+	  }
+	  
+	  class person{
+	     //we want to access the name in this component 
+		 {this.props.name}
+	  }
+	  
+	  const Family =(props)=>(
+			<person name={props.name}/> //without passing props to child, we wont access
+	  )
+				.
+    In this example totally there are three levels to pass through the component,it is very complex for more number o components like 7 levels,,,
+	
+	  to avoiid this we go for context-api / redux
+				
+										
+					 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+			 
+	
