@@ -20,6 +20,14 @@ export default class Provider extends Component {
             this.setState({
               age: this.state.age + 1
             });
+          },
+          decreaseAge: () => {
+            this.setState({
+              age: this.state.age - 1
+            });
+          },
+          changeName: name => {
+            this.setState({ name });
           }
         }}
       >
