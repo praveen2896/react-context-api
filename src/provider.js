@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 
+//make new context
 export const MyContext = React.createContext();
 
+//then create a provider(context provider)
 export default class Provider extends Component {
+  //put all the data which we are using in overall components
   state = {
     name: "praveen",
     age: 22,

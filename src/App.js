@@ -1,36 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
+import { MyContext } from "./provider";
+import Provider from "./provider";
 
-//make new context
-const MyContext = React.createContext();
-
-//then create a provider(context provider)
-class MyProvider extends Component {
-  //put all the data which we are using in overall components
-  state = {
-    name: "praveen",
-    age: 22,
-    Company: "wipro"
-  };
-  render() {
-    return (
-      <MyContext.Provider
-        value={{
-          state: this.state,
-          growYearOlder: () => {
-            this.setState({
-              age: this.state.age + 1
-            });
-          }
-        }}
-      >
-        {this.props.children}
-      </MyContext.Provider>
-    );
-  }
-}
-
-const Family = props => (
+const Family = () => (
   <div className="family">
     <MyContext.Consumer>
       {context => (
@@ -67,10 +40,10 @@ class Person extends Component {
 class App extends Component {
   render() {
     return (
-      <MyProvider>
+      <Provider>
         <div className="App">Hi i am praveen</div>
         <Family />
-      </MyProvider>
+      </Provider>
     );
   }
 }
